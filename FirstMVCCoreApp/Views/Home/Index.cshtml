@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+        @{
+            int a = 10;
+        }
+
+        @if (a == 5)
+        {
+            a++;
+            <h1> hello from if building block and value is @a </h1>
+        }
+        else if (a == 10)
+        {
+            <h1> hello from else if building block </h1>
+        }
+        else
+        {
+            <h1> hello from else building block </h1>
+        }
+
+        @{
+            int b = 10;
+            int c = 12;
+        }
+        <h1>
+            ternary- @(b==10 ? c=10 : c=0)
+            The value of c=@c
+        </h1>
+
+        @{
+            int d = 1;
+        }
+        @switch (d)
+        {
+            case 1:<h1> I am 1</h1>
+                break;
+            case 2: <h1> I am 2</h1>
+                break;
+
+            default: <h1> I am Default</h1>
+                break;
+        }
+    </div>
