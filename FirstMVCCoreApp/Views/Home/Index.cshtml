@@ -1,57 +1,70 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-
-        @{
-            int a = 10;
-        }
-
-        @if (a == 5)
-        {
-            a++;
-            <h1> hello from if building block and value is @a </h1>
-        }
-        else if (a == 10)
-        {
-            <h1> hello from else if building block and a new change 1 </h1>
-        }
-        else
-        {
-            <h1> hello from else building block </h1>
-        }
-
-        @{
-            int b = 10;
-            int c = 12;
-        }
-        <h1>
-            ternary- @(b==10 ? c=10 : c=0)
-            The value of c=@c
-        </h1>
-
-        @{
-            int d = 1;
-        }
-        @switch (d)
-        {
-            case 1:<h1> I am 1</h1>
-                break;
-            case 2: <h1> I am 2</h1>
-                break;
-
-            default: <h1> I am Default</h1>
-                break;
-        }
-        <input type="button" value="ClickMe" class="btn btn-danger" />
-        <script src="~/lib/jquery/jquery.js"></script>
-        <script>
-            $(document).ready(function () {
-                alert("Page Loaded");
-            }
-            )
-        </script>
+<section class="jumbotron text-center">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="display-4">Welcome To Book Store Application</h1>
+            <p>
+                <a href="#" class="btn btn-primary my-2">Seach Books</a>
+            </p>
+        </div>
     </div>
+</section>
+<div class="py-5 bg-light">
+    <div class="container">
+        <h3 class="h3">Top Books</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000"></svg>
+                    <div class="card-body">
+                        <p class="card-text"> This section is used to display the short description of the book </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                            </div>
+                            <small class="text-muted">Author Name</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000"></svg>
+                    <div class="card-body">
+                        <p class="card-text"> This section is used to display the short description of the book </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                            </div>
+                            <small class="text-muted">Author Name</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000"></svg>
+                    <div class="card-body">
+                        <p class="card-text"> This section is used to display the short description of the book </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                            </div>
+                            <small class="text-muted">Author Name</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{ 
+<script>
+    $(document).ready(function () {
+        alert("Page Loaded");
+    }
+    )
+</script>
+}
