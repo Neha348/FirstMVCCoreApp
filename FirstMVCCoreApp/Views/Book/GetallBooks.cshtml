@@ -1,5 +1,13 @@
 ﻿@model IEnumerable<FirstMVCCoreApp.Models.BookModel>
 
+@*@{ 
+    var parameter = new Dictionary<string, string>
+    {
+        {"name","Neha"  },
+        {"Company","webgentle"},
+        {"appname","Bookstore"},
+    };
+}*@
     <div class="container">
         <h3 class="h3">All Books</h3>
         <div class="row">
@@ -13,7 +21,9 @@
                             <p class="card-text">@book.Description </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="/book/GetBook/@book.id" class="btn btn-sm btn-outline-secondary">View Details</a>
+                                    <a asp-route="Bookdetailsroute" asp-route-id="@book.id" 
+                                      
+                                       class="btn btn-sm btn-outline-secondary">View Details</a>
                                 </div>
                                 <small class="text-muted">@book.AuthorName</small>
                             </div>

@@ -6,19 +6,74 @@ using FirstMVCCoreApp.Models;
 using Microsoft.AspNetCore.Routing;
 using FirstMVCCoreApp.Controllers;
 using System.Security.Cryptography.X509Certificates;
+using FirstMVCCoreApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FirstMVCCoreApp.Repository
 {
     public class BookRepository
     {
-
-    public List <BookModel> GetAllBooks()
+        private readonly Bookstorecontext _context = null;
+        public BookRepository(Bookstorecontext context)
         {
-            return Datasource();
+            _context = context;
         }
-        public BookModel GetBookByiD(int id)
+        public async Task<int> AddNewBook( BookModel model)
         {
-            return Datasource().Where(x => x.id == id).FirstOrDefault();
+            var newbook = new Books()
+            {
+                Title = model.Title,
+                CreatedOn = DateTime.UtcNow,
+                AuthorName = model.AuthorName,
+                Description = model.Description,
+                Totalpages = model.Totalpages,
+                UpdatedOn=DateTime.UtcNow
+            };
+           await _context.book.AddAsync(newbook);
+          await _context.SaveChangesAsync();
+            return newbook.id;
+        }
+    public async Task<List<BookModel>> GetAllBooks()
+        {
+            var books = new List<BookModel>();
+            var allbooks = await _context.book.ToListAsync();
+            if(allbooks?.Any()== true)
+            {
+                foreach(var book in allbooks)
+                {
+                    books.Add(new BookModel()
+                    {
+                        AuthorName = book.AuthorName,
+                        Title = book.Title,
+                        Catagory = book.Catagory,
+                        Totalpages = book.Totalpages,
+                        Description = book.Description,
+                        id=book.id,
+                        Language=book.Language
+                    });
+                }
+            }
+             return books;
+        }
+        public async Task<BookModel> GetBookByiD(int id)
+        {
+            var Book = await _context.book.FindAsync(id);
+              if(Book!=null)
+               {
+                var bookdetails = new BookModel()
+                {
+                    AuthorName = Book.AuthorName,
+                    Title = Book.Title,
+                    Description = Book.Description,
+                    Catagory = Book.Catagory,
+                    Language = Book.Language,
+                    Totalpages=Book.Totalpages,
+                    id=Book.id
+                };
+                return bookdetails;
+            }
+          return null;
+        
         }
         public List<BookModel> SearchBook(string title, string Author)
         {
