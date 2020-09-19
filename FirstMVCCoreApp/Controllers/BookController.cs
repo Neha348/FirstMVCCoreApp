@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FirstMVCCoreApp.Models;
 using FirstMVCCoreApp.Repository;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FirstMVCCoreApp.Controllers
 {
@@ -37,6 +37,10 @@ namespace FirstMVCCoreApp.Controllers
 
         public ViewResult AddBook(bool IsSuccess= false, int bookid=0)
         {
+            //ViewBag.Language = new SelectList(new List<string>(){
+            //    "English","Hindi","Dutch"
+            //}, selectedValue: "English");
+            ViewBag.Language = new SelectList(GetLanguage(), "Id", "Text");
             ViewBag.IsSuccess = IsSuccess;
             ViewBag.Bookid = bookid;
             return View();
@@ -44,12 +48,34 @@ namespace FirstMVCCoreApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBook(BookModel bookmodel)
         {
-            int id= await _bookRepository.AddNewBook(bookmodel);
-            if(id>0)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(AddBook),new { IsSuccess=true, bookid = id });
-            }    
+                int id = await _bookRepository.AddNewBook(bookmodel);
+                if (id > 0)
+                {
+                    return RedirectToAction(nameof(AddBook), new { IsSuccess = true, bookid = id });
+                }
+            }
+            //ViewBag.Language = new SelectList(new List<string>(){
+            //    "English","Hindi","Dutch"
+            //},selectedValue:"English");
+            // another way of having the list item by function
+            ViewBag.Language = new SelectList(GetLanguage(),"Id","Text");
+            ModelState.AddModelError("", "This is my custome error Message");
+            //ViewBag.IsSuccess = false;
+            //ViewBag.Bookid = 0;
             return View();
         }
+        private List<LanguageModel> GetLanguage()
+        {
+            return new List<LanguageModel>()
+            {
+                new LanguageModel(){ id=1, Text="English"},
+                new LanguageModel(){id=2, Text="Hindi"},
+                new LanguageModel(){id=3,Text="Dutch"}
+
+            };
+        }
+
     }
 }

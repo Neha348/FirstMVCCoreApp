@@ -22,11 +22,12 @@ namespace FirstMVCCoreApp.Repository
         {
             var newbook = new Books()
             {
+                Language=model.Language,
                 Title = model.Title,
-                CreatedOn = DateTime.UtcNow,
+                CreatedOn = Convert.ToDateTime(model.CreatedOn),
                 AuthorName = model.AuthorName,
                 Description = model.Description,
-                Totalpages = model.Totalpages,
+                Totalpages =model.Totalpages.HasValue? model.Totalpages.Value: 0,
                 UpdatedOn=DateTime.UtcNow
             };
            await _context.book.AddAsync(newbook);

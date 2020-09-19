@@ -1,11 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Add New Book";
+    //string selectedvalue = "English";
 }
 @model BookModel
     <div class="container">
         <h3 class="display-4">Add New Book</h3>
         <hr />
-        @if (ViewBag.IsSuccess)
+        @if (ViewBag.IsSuccess == true)
         {
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Congratulations. You have added the New Book Successfully.<br/>
@@ -16,25 +17,47 @@
             </div>
         }
 
-        <form method="post">
-            <div class="form-group">
-                <label asp-for="Title"></label>
-                <input asp-for="Title" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="AuthorName"></label>
-                <input asp-for="AuthorName" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Description"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-                <label asp-for="Totalpages"></label>
-                <input asp-for="Totalpages" class="form-control" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add Book" class="btn btn-primary" />
-            </div>
-        </form>
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="CreatedOn"></label>
+            <input asp-for="CreatedOn" class="form-control" />
+            <span asp-validation-for="CreatedOn" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Language"></label>
+            <select asp-for="Language" class="form-control" required asp-items=" ViewBag.Language">
+                <option value="">Please choose Book Language</option>
+                @*<option value="">Please choose Book Language</option>
+        <option value="English" selected>English(Global language)</option>
+        <option value="Hindi">Hindi(One of the best language)</option>
+        <option value="French">French(Mostly used by Candaian people</option>
+        <option value="Dutch">Dutch(Mostly used by the Germans</option>*@
+            </select>
+            <span asp-validation-for="Language" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AuthorName"></label>
+            <input asp-for="AuthorName" class="form-control" />
+            <span asp-validation-for="AuthorName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+
+        </div>
+        <div class="form-group">
+            <label asp-for="Totalpages"></label>
+            <input asp-for="Totalpages" class="form-control" />
+            <span asp-validation-for="Totalpages" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Add Book" class="btn btn-primary" />
+        </div>
+    </form>
     </div>

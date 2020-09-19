@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,16 +8,26 @@ namespace FirstMVCCoreApp.Models
 {
     public class BookModel
     {
+        [DataType(DataType.Date)]
+        [Display(Name ="Choose the Date")]
+        public string CreatedOn { get; set;  }
         public int id { get; set; }
-        public string Title { get; set; }
 
+        [StringLength(100,MinimumLength =5)]
+        [Required(ErrorMessage ="Please Enter the Title of Your book")]
+        public string Title { get; set; }
+        
+        [Required(ErrorMessage = "Please Enter the Author Name")]
         public string AuthorName { get; set; }
 
+        [StringLength(500, MinimumLength = 50)]
         public string Description { get; set; }
         public string Catagory { get; set; }
 
         public string Language { get; set; }
 
-        public int Totalpages { get; set; }
+        [Required(ErrorMessage = "Please Enter the Total Pages")]
+        [Display(Name ="Total pages of Book")]
+        public int? Totalpages { get; set; }
     }
 }
