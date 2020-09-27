@@ -4,14 +4,16 @@ using FirstMVCCoreApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FirstMVCCoreApp.Migrations
 {
     [DbContext(typeof(Bookstorecontext))]
-    partial class BookstorecontextModelSnapshot : ModelSnapshot
+    [Migration("20200926231610_addedlanguagetable")]
+    partial class addedlanguagetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

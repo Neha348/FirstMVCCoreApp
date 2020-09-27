@@ -13,9 +13,12 @@ namespace FirstMVCCoreApp.Data
         public string AuthorName { get; set; }
         public string Description { get; set; }
         public string Catagory { get; set; }
-        public string Language { get; set; }
+        public int LanguageId { get; set; }
+       // public List<string> MultiLanguage { get; set; }
         public int Totalpages { get; set; }
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
+
+        public Language Language { get; set; }
     }
 }

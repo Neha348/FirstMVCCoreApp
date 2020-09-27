@@ -29,8 +29,9 @@ namespace FirstMVCCoreApp
             services.AddDbContext<Bookstorecontext>(options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Bookstore;Integrated Security=True;")); 
             services.AddControllersWithViews();
             services.AddScoped<BookRepository, BookRepository>();
+            services.AddScoped<LanguageRepository, LanguageRepository>();
 #if DEBUG
-           services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
         }
 

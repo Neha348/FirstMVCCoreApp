@@ -2,20 +2,24 @@
     ViewData["Title"] = "Add New Book";
     //string selectedvalue = "English";
 }
+@using FirstMVCCoreApp.Enum;
+
 @model BookModel
-    <div class="container">
-        <h3 class="display-4">Add New Book</h3>
-        <hr />
-        @if (ViewBag.IsSuccess == true)
-        {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Congratulations. You have added the New Book Successfully.<br/>
-                Click <a asp-controller="book" asp-action="GetBook" asp-route-id="@ViewBag.Bookid">Here</a> to View the details.</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        }
+<div class="container">
+    <h3 class="display-4">Add New Book</h3>
+    <hr />
+    @if (ViewBag.IsSuccess == true)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>
+                Congratulations. You have added the New Book Successfully.<br />
+                Click <a asp-controller="book" asp-action="GetBook" asp-route-id="@ViewBag.Bookid">Here</a> to View the details.
+            </strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
 
     <form method="post">
         <div class="form-group">
@@ -24,16 +28,16 @@
             <span asp-validation-for="CreatedOn" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Language"></label>
-            <select asp-for="Language" class="form-control" required asp-items=" ViewBag.Language">
+            <label asp-for="LanguageId"></label>
+            <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.Language">
                 <option value="">Please choose Book Language</option>
                 @*<option value="">Please choose Book Language</option>
-        <option value="English" selected>English(Global language)</option>
-        <option value="Hindi">Hindi(One of the best language)</option>
-        <option value="French">French(Mostly used by Candaian people</option>
-        <option value="Dutch">Dutch(Mostly used by the Germans</option>*@
+                    <option value="English" selected>English(Global language)</option>
+                    <option value="Hindi">Hindi(One of the best language)</option>
+                    <option value="French">French(Mostly used by Candaian people</option>
+                    <option value="Dutch">Dutch(Mostly used by the Germans</option>*@
             </select>
-            <span asp-validation-for="Language" class="text-danger"></span>
+            <span asp-validation-for="LanguageId" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Title"></label>
@@ -60,4 +64,4 @@
             <input type="submit" value="Add Book" class="btn btn-primary" />
         </div>
     </form>
-    </div>
+</div>

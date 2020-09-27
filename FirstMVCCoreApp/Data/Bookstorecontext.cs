@@ -15,6 +15,7 @@ namespace FirstMVCCoreApp.Data
 
         }
         public DbSet<Books> book { get; set; }
+        public DbSet<Language> Language { get; set; }
         
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
