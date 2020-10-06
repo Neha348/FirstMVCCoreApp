@@ -19,6 +19,29 @@ namespace FirstMVCCoreApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("FirstMVCCoreApp.Data.Bookgallery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("URL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Bookgallery");
+                });
+
             modelBuilder.Entity("FirstMVCCoreApp.Data.Books", b =>
                 {
                     b.Property<int>("id")
@@ -29,7 +52,13 @@ namespace FirstMVCCoreApp.Migrations
                     b.Property<string>("AuthorName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BookPdfUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Catagory")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverImageURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedOn")
@@ -73,6 +102,15 @@ namespace FirstMVCCoreApp.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Language");
+                });
+
+            modelBuilder.Entity("FirstMVCCoreApp.Data.Bookgallery", b =>
+                {
+                    b.HasOne("FirstMVCCoreApp.Data.Books", "Book")
+                        .WithMany("bookGallery")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FirstMVCCoreApp.Data.Books", b =>

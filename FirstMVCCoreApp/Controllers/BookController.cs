@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FirstMVCCoreApp.Models;
 using FirstMVCCoreApp.Repository;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -14,10 +17,12 @@ namespace FirstMVCCoreApp.Controllers
     {
        private readonly BookRepository _bookRepository = null;
         private readonly LanguageRepository _languageRepository = null;
-        public BookController(BookRepository bookRepository, LanguageRepository languageRepository)
+        private readonly IWebHostEnvironment _IWebHostEnvironment = null;
+        public BookController(BookRepository bookRepository, LanguageRepository languageRepository, IWebHostEnvironment iWebHostEnvironment)
         {
             _bookRepository = bookRepository;
             _languageRepository = languageRepository;
+            _IWebHostEnvironment = iWebHostEnvironment;
          }
        public async Task<ViewResult> GetallBooks()
         {
@@ -78,6 +83,31 @@ namespace FirstMVCCoreApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(bookmodel.CoverPhoto != null)
+                {
+                    string folder = "/book/CoverPhoto/";
+                    bookmodel.CoverImageURL= await Uploadimage(folder, bookmodel.CoverPhoto);
+                }
+                if (bookmodel.BookPdf != null)
+                {
+                    string folder = "/book/Pdf/";
+                    bookmodel.BookPdfUrl = await Uploadimage(folder, bookmodel.BookPdf);
+                }
+                if (bookmodel.GalleryFiles != null)
+                {
+                    string folder = "/book/Gallery/";
+                    bookmodel.Gallery = new List<GalleryModel>();
+                    foreach (var file in bookmodel.GalleryFiles)
+                    {
+                        var galary = new GalleryModel()
+                        {
+                            Name = file.FileName,
+                            URL = await Uploadimage(folder, file)
+                        };
+                        bookmodel.Gallery.Add(galary);
+                        
+                    }
+                }
                 int id = await _bookRepository.AddNewBook(bookmodel);
                 if (id > 0)
                 {
@@ -121,6 +151,15 @@ namespace FirstMVCCoreApp.Controllers
             //ViewBag.IsSuccess = false;
             //ViewBag.Bookid = 0;
             return View();
+        }
+
+        private async Task<string> Uploadimage( string folderpath, IFormFile file)
+        {
+            
+            folderpath += Guid.NewGuid().ToString() + '_' + file.FileName;
+            string serverfolder = Path.Combine(_IWebHostEnvironment.WebRootPath + folderpath);
+            await file.CopyToAsync(new FileStream(serverfolder, FileMode.Create));
+            return folderpath;
         }
         //private List<LanguageModel> GetLanguage()
         //{

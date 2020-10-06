@@ -5,23 +5,30 @@
 @using FirstMVCCoreApp.Enum;
 
 @model BookModel
-<div class="container">
-    <h3 class="display-4">Add New Book</h3>
-    <hr />
-    @if (ViewBag.IsSuccess == true)
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>
-                Congratulations. You have added the New Book Successfully.<br />
-                Click <a asp-controller="book" asp-action="GetBook" asp-route-id="@ViewBag.Bookid">Here</a> to View the details.
-            </strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    }
+    <div class="container">
+        <h3 class="display-4">Add New Book</h3>
+        <hr />
+        @if (ViewBag.IsSuccess == true)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>
+                    Congratulations. You have added the New Book Successfully.<br />
+                    Click <a asp-controller="book" asp-action="GetBook" asp-route-id="@ViewBag.Bookid">Here</a> to View the details.
+                </strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+     
+        @*<button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  id="myloader" style="display:none;"></span>
+            Loading...
+        </button>*@
 
-    <form method="post">
+    <form method="post" data-ajax="true" data-ajax-complete="mycomplete" enctype="multipart/form-data"
+          data-ajax-success="mysuccess" data-ajax-failure="myfailure" data-ajax-loading="#myloader" asp-action="AddBook" asp-controller="Book">
+
         <div class="form-group">
             <label asp-for="CreatedOn"></label>
             <input asp-for="CreatedOn" class="form-control" />
@@ -32,10 +39,10 @@
             <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.Language">
                 <option value="">Please choose Book Language</option>
                 @*<option value="">Please choose Book Language</option>
-                    <option value="English" selected>English(Global language)</option>
-                    <option value="Hindi">Hindi(One of the best language)</option>
-                    <option value="French">French(Mostly used by Candaian people</option>
-                    <option value="Dutch">Dutch(Mostly used by the Germans</option>*@
+                <option value="English" selected>English(Global language)</option>
+                <option value="Hindi">Hindi(One of the best language)</option>
+                <option value="French">French(Mostly used by Candaian people</option>
+                <option value="Dutch">Dutch(Mostly used by the Germans</option>*@
             </select>
             <span asp-validation-for="LanguageId" class="text-danger"></span>
         </div>
@@ -61,7 +68,48 @@
             <span asp-validation-for="Totalpages" class="text-danger"></span>
         </div>
         <div class="form-group">
+            <label asp-for="BookPdf"></label>
+            <div class="custom-file">
+                <input asp-for="BookPdf" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <span asp-validation-for="BookPdf" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CoverPhoto"></label>
+            <div class="custom-file">
+                <input asp-for="CoverPhoto" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <span asp-validation-for="CoverPhoto" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="GalleryFiles"></label>
+            <div class="custom-file">
+                <input asp-for="GalleryFiles" class="custom-file-input" id="customFile2">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <span asp-validation-for="GalleryFiles" class="text-danger"></span>
+        </div>
+        <div class="form-group">
             <input type="submit" value="Add Book" class="btn btn-primary" />
         </div>
     </form>
-</div>
+    </div>
+@*@section scripts
+{
+<script>
+    function mycomplete(data) {
+        alert("I am from Complete");
+        console.log("I am from Complete");
+    }
+    function mysuccess(data) {
+        alert("I am from Success");
+        console.log("I am from Success");
+    }
+    function myfailure(data) {
+        alert("I am from failure");
+        console.log("I am from failure");
+    }
+</script>
+ }*@

@@ -14,21 +14,7 @@
             @foreach (var book in Model)
             {
                 <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000"></svg>
-                        <div class="card-body">
-                            <h3 class="card-title">@book.Title</h3>
-                            <p class="card-text">@book.Description </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a asp-route="Bookdetailsroute" asp-route-id="@book.id" 
-                                      
-                                       class="btn btn-sm btn-outline-secondary">View Details</a>
-                                </div>
-                                <small class="text-muted">@book.AuthorName</small>
-                            </div>
-                        </div>
-                    </div>
+                    <partial name="_bookthumbnail" model="book" />
                 </div>
             }
 

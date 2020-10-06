@@ -27,36 +27,44 @@ namespace FirstMVCCoreApp.Repository
                 CreatedOn = Convert.ToDateTime(model.CreatedOn),
                 AuthorName = model.AuthorName,
                 Description = model.Description,
-                Totalpages =model.Totalpages.HasValue? model.Totalpages.Value: 0,
-                UpdatedOn=DateTime.UtcNow
+                Totalpages = model.Totalpages.HasValue ? model.Totalpages.Value : 0,
+                UpdatedOn = DateTime.UtcNow,
+                CoverImageURL = model.CoverImageURL,
+                BookPdfUrl=model.BookPdfUrl
             };
+
+            newbook.bookGallery = new List<Bookgallery>();
+            foreach( var file in model.Gallery)
+            {
+                newbook.bookGallery.Add(new Bookgallery()
+                {
+                    Name = file.Name, 
+                    URL=file.URL, 
+                });
+
+            }
            await _context.book.AddAsync(newbook);
           await _context.SaveChangesAsync();
             return newbook.id;
         }
     public async Task<List<BookModel>> GetAllBooks()
         {
-            var books = new List<BookModel>();
-            var allbooks = await _context.book.ToListAsync();
-            if(allbooks?.Any()== true)
+            return await _context.book.Select(book => new BookModel()
             {
-                foreach(var book in allbooks)
-                {
-                    books.Add(new BookModel()
-                    {
-                        AuthorName = book.AuthorName,
-                        Title = book.Title,
-                        Catagory = book.Catagory,
-                        Totalpages = book.Totalpages,
-                        Description = book.Description,
-                        id=book.id,
-                        LanguageId=book.LanguageId,
-                        Language = book.Language.Name
+                AuthorName = book.AuthorName,
+                Title = book.Title,
+                Catagory = book.Catagory,
+                Totalpages = book.Totalpages,
+                Description = book.Description,
+                id = book.id,
+                LanguageId = book.LanguageId,
+                Language = book.Language.Name,
+                CoverImageURL = book.CoverImageURL,
+                BookPdfUrl = book.BookPdfUrl
 
-                    });
-                }
-            }
-             return books;
+            }).ToListAsync();
+               
+                     
         }
         public async Task<BookModel> GetBookByiD(int id)
         {
@@ -69,7 +77,15 @@ namespace FirstMVCCoreApp.Repository
                 LanguageId = book.LanguageId,
                 Language = book.Language.Name,
                 Totalpages = book.Totalpages,
-                id = book.id
+                id = book.id,
+                CoverImageURL = book.CoverImageURL,
+                Gallery = book.bookGallery.Select(g => new GalleryModel()
+                {
+                    Name = g.Name,
+                    URL = g.URL,
+                    Id = g.Id
+                }).ToList(),
+                BookPdfUrl = book.BookPdfUrl
             }).FirstOrDefaultAsync();
                 
             //  if(Book!=null)

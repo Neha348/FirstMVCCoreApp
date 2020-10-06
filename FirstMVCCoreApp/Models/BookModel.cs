@@ -1,5 +1,6 @@
 ﻿using FirstMVCCoreApp.Enum;
 using FirstMVCCoreApp.Helper;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,7 +18,7 @@ namespace FirstMVCCoreApp.Models
 
         //[StringLength(100,MinimumLength =5)]
         //[Required(ErrorMessage ="Please Enter the Title of Your book")]
-        [MyCustomeValidationAttribute]
+        //[MyCustomeValidationAttribute("Azure")]
         public string Title { get; set; }
         
         [Required(ErrorMessage = "Please Enter the Author Name")]
@@ -38,5 +39,21 @@ namespace FirstMVCCoreApp.Models
         [Required(ErrorMessage = "Please Enter the Total Pages")]
         [Display(Name ="Total pages of Book")]
         public int? Totalpages { get; set; }
+
+        [Display(Name = "Choose the Cover Photo of your Book")]
+        [Required]
+        public IFormFile CoverPhoto { get; set; }
+        public string CoverImageURL { get; set; }
+
+        [Display(Name = "Choose the Gallery images for your Book")]
+        [Required]
+        public IFormFileCollection GalleryFiles { get; set; }
+        public List<GalleryModel> Gallery { get; set; }
+
+        [Display(Name = "Upload your Book in Pdf File format")]
+        [Required]
+        public IFormFile BookPdf { get; set; }
+        public string BookPdfUrl { get; set; }
+
     }
 }

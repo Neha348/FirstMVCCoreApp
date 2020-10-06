@@ -16,7 +16,9 @@ namespace FirstMVCCoreApp.Data
         }
         public DbSet<Books> book { get; set; }
         public DbSet<Language> Language { get; set; }
-        
+
+        public DbSet<Bookgallery> Bookgallery { get; set; }
+
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    optionsBuilder.UseSqlServer("Server=.;Database=Bookstore;Integrated Security=True;");

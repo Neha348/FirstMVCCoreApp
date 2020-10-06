@@ -9,12 +9,18 @@ namespace FirstMVCCoreApp.Helper
     public class MyCustomeValidationAttribute : ValidationAttribute
 
     {
+        public MyCustomeValidationAttribute( string text)
+        {
+            Text = text;
+        }
+        public string Text { get; set; }
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+
             if(value!=null)
             {
                 string bookname = value.ToString();
-                if(bookname.Contains("MVC"))
+                if(bookname.Contains(Text))
                 {
                    return ValidationResult.Success;
                 }

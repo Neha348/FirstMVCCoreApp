@@ -19,6 +19,10 @@ namespace FirstMVCCoreApp.Data
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
 
+        public string CoverImageURL { get; set; }
+        public string BookPdfUrl { get; set; }
         public Language Language { get; set; }
+        public ICollection<Bookgallery> bookGallery { get; set; }
+
     }
 }
