@@ -9,6 +9,7 @@ using FirstMVCCoreApp.Models;
 
 namespace FirstMVCCoreApp.Controllers
 {
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,16 +18,20 @@ namespace FirstMVCCoreApp.Controllers
         {
             _logger = logger;
         }
-
+        [Route("~/")]
+      
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        //[Route("about-us/{id}/test/{name}")]
+        [Route("~/about-us/{name:alpha:minlength(5)}")]
+        public IActionResult Privacy(string name)
         {
             return View();
         }
+      //  [HttpGet("contact-us",Name ="contact",Order =1)]
         public IActionResult ContactUs()
         {
             return View();

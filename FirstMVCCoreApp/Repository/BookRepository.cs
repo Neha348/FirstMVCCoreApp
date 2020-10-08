@@ -112,6 +112,26 @@ namespace FirstMVCCoreApp.Repository
           //  return Datasource().Where(x => x.Title.Contains(title) || x.AuthorName.Contains(Author)).ToList();
         }
 
+        public async Task<List<BookModel>> GetTopBooksAsync( int count)
+        {
+            return await _context.book.Select(book => new BookModel()
+            {
+                AuthorName = book.AuthorName,
+                Title = book.Title,
+                Catagory = book.Catagory,
+                Totalpages = book.Totalpages,
+                Description = book.Description,
+                id = book.id,
+                LanguageId = book.LanguageId,
+                Language = book.Language.Name,
+                CoverImageURL = book.CoverImageURL,
+                BookPdfUrl = book.BookPdfUrl
+
+            }).Take(count).ToListAsync();
+
+
+        }
+
         //private List<BookModel> Datasource()
         //{
         //    return new List<BookModel>()

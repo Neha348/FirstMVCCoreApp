@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FirstMVCCoreApp.Controllers
 {
+    [Route("[controller]/[action]")]
     public class BookController : Controller
 
     {
@@ -24,13 +25,14 @@ namespace FirstMVCCoreApp.Controllers
             _languageRepository = languageRepository;
             _IWebHostEnvironment = iWebHostEnvironment;
          }
+        [Route("~/all-books")]
        public async Task<ViewResult> GetallBooks()
         {
         var data = await _bookRepository.GetAllBooks();
         return View(data);
         }
 
-        [Route("Book-details/{id}",Name = "Bookdetailsroute")]
+        [Route("~/Book-details/{id:int:min(1)}",Name = "Bookdetailsroute")]
         public  async Task<ViewResult> GetBook(int id)
         {
             var data = await _bookRepository.GetBookByiD(id);

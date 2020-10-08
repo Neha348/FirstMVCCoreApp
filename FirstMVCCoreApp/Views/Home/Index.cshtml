@@ -16,17 +16,8 @@
         <h3 class="h3">Top Books</h3>
         @*<big>Top Books</big>
         <p big>Top books using attribute</p>*@
-        <div class="row">
-            <div class="col-md-4">
-                <partial name="_bookthumbnail" model="new BookModel()"/>
-            </div>
-            <div class="col-md-4">
-                <partial name="_bookthumbnail" model="new BookModel()" />
-            </div>
-            <div class="col-md-4">
-                <partial name="_bookthumbnail" model="new BookModel()"/>
-            </div>
-        </div>
+        @await Component.InvokeAsync("TopBooks", new { count = 5 })
+        @*<vc:top-books count="3"></vc:top-books>*@
     </div>
 </div>
 @section Scripts{ 
