@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FirstMVCCoreApp.Repository
 {
-    public class LanguageRepository
+    public class LanguageRepository : ILanguageRepository
     {
 
         private readonly Bookstorecontext _context = null;
@@ -16,18 +16,18 @@ namespace FirstMVCCoreApp.Repository
         {
             _context = context;
         }
-        
+
         public async Task<List<LanguageModel>> GetLanguages()
         {
-          return await _context.Language.Select(x => new LanguageModel()
+            return await _context.Language.Select(x => new LanguageModel()
             {
                 id = x.id,
                 Description = x.Description,
                 Name = x.Name
-            }).ToListAsync(); 
-        
+            }).ToListAsync();
+
         }
-          
+
     }
-        
+
 }

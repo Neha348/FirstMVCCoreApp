@@ -8,17 +8,21 @@ using FirstMVCCoreApp.Controllers;
 using System.Security.Cryptography.X509Certificates;
 using FirstMVCCoreApp.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FirstMVCCoreApp.Repository
 {
-    public class BookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly Bookstorecontext _context = null;
-        public BookRepository(Bookstorecontext context)
+        private readonly IConfiguration _configuration = null;
+        public BookRepository(Bookstorecontext context, IConfiguration configuration )
         {
             _context = context;
+            _configuration = configuration;
+
         }
-        public async Task<int> AddNewBook( BookModel model)
+        public async Task<int> AddNewBook(BookModel model)
         {
             var newbook = new Books()
             {
@@ -30,24 +34,24 @@ namespace FirstMVCCoreApp.Repository
                 Totalpages = model.Totalpages.HasValue ? model.Totalpages.Value : 0,
                 UpdatedOn = DateTime.UtcNow,
                 CoverImageURL = model.CoverImageURL,
-                BookPdfUrl=model.BookPdfUrl
+                BookPdfUrl = model.BookPdfUrl
             };
 
             newbook.bookGallery = new List<Bookgallery>();
-            foreach( var file in model.Gallery)
+            foreach (var file in model.Gallery)
             {
                 newbook.bookGallery.Add(new Bookgallery()
                 {
-                    Name = file.Name, 
-                    URL=file.URL, 
+                    Name = file.Name,
+                    URL = file.URL,
                 });
 
             }
-           await _context.book.AddAsync(newbook);
-          await _context.SaveChangesAsync();
+            await _context.book.AddAsync(newbook);
+            await _context.SaveChangesAsync();
             return newbook.id;
         }
-    public async Task<List<BookModel>> GetAllBooks()
+        public async Task<List<BookModel>> GetAllBooks()
         {
             return await _context.book.Select(book => new BookModel()
             {
@@ -63,8 +67,8 @@ namespace FirstMVCCoreApp.Repository
                 BookPdfUrl = book.BookPdfUrl
 
             }).ToListAsync();
-               
-                     
+
+
         }
         public async Task<BookModel> GetBookByiD(int id)
         {
@@ -87,7 +91,7 @@ namespace FirstMVCCoreApp.Repository
                 }).ToList(),
                 BookPdfUrl = book.BookPdfUrl
             }).FirstOrDefaultAsync();
-                
+
             //  if(Book!=null)
             //   {
             //    var bookdetails = new BookModel()
@@ -103,16 +107,16 @@ namespace FirstMVCCoreApp.Repository
             //    };
             //    return bookdetails;
             //}
-          return Book;
-        
+            return Book;
+
         }
         public List<BookModel> SearchBook(string title, string Author)
         {
             return null;
-          //  return Datasource().Where(x => x.Title.Contains(title) || x.AuthorName.Contains(Author)).ToList();
+            //  return Datasource().Where(x => x.Title.Contains(title) || x.AuthorName.Contains(Author)).ToList();
         }
 
-        public async Task<List<BookModel>> GetTopBooksAsync( int count)
+        public async Task<List<BookModel>> GetTopBooksAsync(int count)
         {
             return await _context.book.Select(book => new BookModel()
             {
@@ -143,5 +147,10 @@ namespace FirstMVCCoreApp.Repository
         //        new BookModel{ id=5, Title="PHP", AuthorName="Webgentle",Description="This is the Book for learning on PHP",Catagory="Programming",Language="English",Totalpages=988}
         //    };
         //}
+
+        public string Getappname()
+        {
+           return _configuration["AppName"];
+        }
     }
 }

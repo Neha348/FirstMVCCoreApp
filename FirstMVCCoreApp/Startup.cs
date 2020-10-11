@@ -26,10 +26,10 @@ namespace FirstMVCCoreApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Bookstorecontext>(options => options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Bookstore;Integrated Security=True;")); 
+            services.AddDbContext<Bookstorecontext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
-            services.AddScoped<BookRepository, BookRepository>();
-            services.AddScoped<LanguageRepository, LanguageRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(option=>
             {
