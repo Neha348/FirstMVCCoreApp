@@ -1,56 +1,66 @@
 ﻿@inject FirstMVCCoreApp.Repository.IBookRepository _Bookrespository
 @using Microsoft.Extensions.Configuration
 @inject IConfiguration _config
+@inject Microsoft.Extensions.Options.IOptionsSnapshot<NewBookAlertConfig> _newbookalertconfig
 @{
     //var newbook = _config.GetSection("NewBookAlert");
     var newbook= new NewBookAlertConfig();
     _config.Bind("NewBookAlert", newbook);
-
+    //var newbookalertconfig = _newbookalertconfig.Value;
+    var newBookAlertConfig = _newbookalertconfig.Get("InternalBook");
+    var thirdpartyBookAlertConfig = _newbookalertconfig.Get("ThirdpartyBook");
 }
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <img class="navbar-brand" src="~/images/Book/Webgentle Logo.png" width="50">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@_config["AppName"]</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="btn btn-outline-primary">Login</a>
-                        <a class="btn btn-primary">Register</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">About us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="GetallBooks">All Books</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-protocol="http" asp-host="webgentle.com" asp-controller="Book" asp-action="GetallBooks">New Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="AddBook">Add Book</a>
-                    </li>
-                </ul>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <img class="navbar-brand" src="~/images/Book/Webgentle Logo.png" width="50">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@_config["AppName"]</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary">Login</a>
+                            <a class="btn btn-primary">Register</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">About us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="GetallBooks">All Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-protocol="http" asp-host="webgentle.com" asp-controller="Book" asp-action="GetallBooks">New Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="AddBook">Add Book</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    @if (newbook.DisplayNewBookAlert)
-    {
-        <div class="alert alert-info" role="alert">
-            @(newbook.BookName)
+        </nav>
+        @if (newBookAlertConfig.DisplayNewBookAlert)
+        {
+            <div class="alert alert-info" role="alert">
+                @(newBookAlertConfig.BookName)
 
-        </div>
-    }
-</header>
+            </div>
+        }
+        @if (thirdpartyBookAlertConfig.DisplayNewBookAlert)
+        {
+            <div class="alert alert-info" role="alert">
+                @(thirdpartyBookAlertConfig.BookName)
+
+            </div>
+        }
+    </header>

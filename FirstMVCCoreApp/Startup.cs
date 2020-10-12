@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FirstMVCCoreApp.Data;
+using FirstMVCCoreApp.Models;
 using FirstMVCCoreApp.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,9 +31,13 @@ namespace FirstMVCCoreApp
             services.AddControllersWithViews();
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
+            services.Configure<NewBookAlertConfig>("InternalBook",Configuration.GetSection("NewBookAlert"));
+            services.Configure<NewBookAlertConfig>("ThirdpartyBook",Configuration.GetSection("ThirdpartyBook"));
+            services.AddSingleton<IMessageRepository, MessageRepository>();
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(option=>
             {
+            
                 option.HtmlHelperOptions.ClientValidationEnabled = false;
             });
 

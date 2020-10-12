@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FirstMVCCoreApp.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using FirstMVCCoreApp.Repository;
 
 namespace FirstMVCCoreApp.Controllers
 {
@@ -15,11 +17,15 @@ namespace FirstMVCCoreApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IConfiguration configuration;
+        private readonly NewBookAlertConfig _newBookAlertConfig;
+        private readonly NewBookAlertConfig _thirdpartyBookConfig;
+        private readonly IMessageRepository _messageRepository;
 
-        public HomeController(IConfiguration _configuration)
+        public HomeController(IOptionsMonitor<NewBookAlertConfig> newBookAlertConfig, IMessageRepository messageRepository)
         {
-            configuration = _configuration;
+            _newBookAlertConfig = newBookAlertConfig.Get("InternalBook");
+            _messageRepository = messageRepository;
+            _thirdpartyBookConfig = newBookAlertConfig.Get("ThirdpartyBook");
         }
      
 
@@ -31,9 +37,13 @@ namespace FirstMVCCoreApp.Controllers
       
         public IActionResult Index()
         {
-            var newbookalert = new NewBookAlertConfig();
-            configuration.Bind("NewBookAlert", newbookalert);
-            bool IsDisplay = newbookalert.DisplayNewBookAlert;
+           bool isdisplay= _newBookAlertConfig.DisplayNewBookAlert;
+            bool isdisplay2 = _thirdpartyBookConfig.DisplayNewBookAlert;
+            //var value = _messageRepository.Getname();
+           
+            //var newbookalert = new NewBookAlertConfig();
+            //configuration.Bind("NewBookAlert", newbookalert);
+            //bool IsDisplay = newbookalert.DisplayNewBookAlert;
             //var newbook = configuration.GetSection("NewBookAlert");
             //var result2 = newbook.GetValue<bool>("DisplayNewBookAlert");
             //var bookname= newbook.GetValue<string>("Bookname");
