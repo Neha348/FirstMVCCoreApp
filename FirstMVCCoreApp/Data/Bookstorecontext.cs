@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FirstMVCCoreApp.Data
 {
-    public class Bookstorecontext:DbContext
+    public class Bookstorecontext:IdentityDbContext
     {
         public Bookstorecontext(DbContextOptions<Bookstorecontext> options):base(options)
         {

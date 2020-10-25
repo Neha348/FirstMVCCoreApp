@@ -8,6 +8,7 @@ using FirstMVCCoreApp.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,7 @@ namespace FirstMVCCoreApp
             services.Configure<NewBookAlertConfig>("InternalBook",Configuration.GetSection("NewBookAlert"));
             services.Configure<NewBookAlertConfig>("ThirdpartyBook",Configuration.GetSection("ThirdpartyBook"));
             services.AddSingleton<IMessageRepository, MessageRepository>();
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<Bookstorecontext>();
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(option=>
             {
@@ -62,7 +64,7 @@ namespace FirstMVCCoreApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
